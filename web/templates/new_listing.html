@@ -1,0 +1,142 @@
+{% extends "layout.html" %}
+{% block content %}
+<header class="masthead">
+    <div class="container px-4 px-lg-5 h-100">
+        <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-8 align-self-end">
+                <h1 class="text-black font-weight-bold"> {{ current_user.firstName }}, We are glad you like to add an item!</h1>
+                <hr class="divider" />
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Current user active listings-->
+<section class="page-section bg-primary" id="about">
+    <div class="container px-4 px-lg-5">
+        <!-- Section header centered-->
+        <div class="text-center">
+            <h2 class="text-white mt-0">Just fill the form below:</h2>
+    </div>
+</section>
+<section>
+<!-- Form to add a new item in the center of the page-->
+    <div class="container">
+        <form action="{{ url_for('new_listing') }}" method="POST" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label for="title" class = "fw-bolder">Title</label>
+                        {% if form.title.errors %}
+                            {{ form.title(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.title.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.title(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="description" class = "fw-bolder">Description</label>
+                        {% if form.description.errors %}
+                            {{ form.description(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.description.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.description(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="price" class = "fw-bolder">Price</label>
+                        {% if form.price.errors %}
+                            {{ form.price(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.location.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.price(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="location" class = "fw-bolder">Location</label>
+                        {% if form.location.errors %}
+                            {{ form.location(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.location.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.location(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="state" class = "fw-bolder">State</label>
+                        {% if form.state.errors %}
+                            {{ form.state(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.state.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.state(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="listingType">Listing Type</label>
+                        {% if form.listingType.errors %}
+                            {{ form.listingType(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.listingType.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.listingType(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="tags">Tags</label>
+                        <!-- select multiple tags -->
+                        {% if form.tags.errors %}
+                            {{ form.tags(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.tags.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.tags(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="image">Images</label>
+                        {% if form.images.errors %}
+                            {{ form.images(class="form-control-file is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.images.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.images(class="form-control-file") }}
+                        {% endif %}
+                    </div>
+                </div>
+                </div>
+                <div class="modal-footer">
+                    {{ form.submit(class="btn btn-primary form-control fw-bolder") }}
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock content %}

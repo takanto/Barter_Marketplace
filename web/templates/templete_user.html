@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block content %}
+    <header class="masthead">
+        <div class="container px-4 px-lg-5 h-100">
+            <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                <div class="col-lg-8 align-self-end">
+                    <h1 class="text-black font-weight-bold">Hi, {{ current_user.firstName }} !</h1>
+                    <hr class="divider"></hr>
+                </div>
+                <div class="col-lg-8 align-self-baseline">
+                    <p class="text-white-75 mb-5">You are currently in {{ current_user.location }}.</p>
+                    <a class="btn btn-primary btn-xl" href="#about">Change location</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Current user active listings-->
+    <section class="page-section bg-primary" id="about">
+        <div class="container px-4 px-lg-5">
+            <!-- Section header centered-->
+            <div class="text-center">
+                <h2 class="text-white mt-0">Your active listings</h2>
+        </div>
+    </section>
+    {% if items %}
+    <section class="page-section" id="listings">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-6 col-lg-4 mb-5">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            {% for item in items %}
+                                <!-- item name as a clickable no underlaying color black-->
+                                <a href="{{ url_for('template', listing.html) }}"><h2 class="card-title m-0">{{ item.title }}</h2></a>
+                                <hr class="divider"></hr>
+                                <!-- Add the image of the product-->
+                                {% if item.images %}
+                                    <img class ="card-img" src="{{ url_for('static', filename = 'assets/img/' + item.image[0]) }}" alt="{{ item.title }}">
+                                {% else %}
+                                    <img class ="card-img" src="{{ url_for('static', filename = 'assets/img/' + item.image[0]) }}" alt="{{ item.name }}">
+                                {% endif %}
+                                <p class="card-text mb-0">{{item.description}}</p>
+                                <p>
+                                {% for tag in tags %}
+                                    <span class="badge badge-pill badge-info">{{ tag.name }}</span>
+                                {% endfor %}
+                                </p>
+                                <p class="card-text mb-0">{{ item.location }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% else %}
+    <!-- center image in whole page-->
+    <main role="main" class="container">
+        <div class="row">
+                <img class ="card-img" src="{{ url_for('static', filename = 'assets/img/placeholder_no_data.png') }}">
+        </div>
+    </main>   
+    {% endif %}
+{% endblock content %}

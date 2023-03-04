@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        {% if title %}
+            <title>Marketplace - {{ title }}</title>
+        {% else %}
+            <title>Marketplace</title>
+        {% endif %}
+        <link rel="icon" type="image/x-icon" href="{{url_for('static', filename = 'assets/favicon.ico')}}"/>
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <!-- Change link, momentary to be able to read it-->
+        <link href="{{url_for('static', filename = "css/styles.css")}}" rel="stylesheet" />
+    </head>
+    <body>
+        <header class="site-header">
+          <!-- Navigation-->
+          <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+            <div class="container">
+              <a class="navbar-brand fw-bold" href="/">Marketplace</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                    <i class="bi-list"></i>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-auto">
+                  {% if current_user.is_authenticated %}
+                    <a class="nav-item nav-link" href=" {{ url_for("new_listing") }}"><i class="fa-solid fa-plus mr-2"></i>New Listing</a>
+                  {% endif %}
+                </div>
+                <!-- Navbar Right Side -->
+                <div class="navbar-nav">
+                  {% if current_user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{{ url_for('account') }}">
+                      <!-- <i class="fa-regular text-light fa-circle-user"></i> -->
+                      {{ current_user.username }}
+                    </a>
+                    {{ current_user.username }}
+                    <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+                  {% else %}
+                    <a class="nav-item nav-link" href="{{ url_for('login') }}#loginURL">Login</a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </nav>
+        </header>
+        <main role="main" class="container">
+          <div class="row">
+            <div class="col-md-8">
+              {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                  {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                      {{ message }}
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              {% endwith %}
+               <!-- Create the item and slideshow of images for each item-->
+    <header class="masthead">
+        <div class="container px-4 px-lg-5 h-100">
+            <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                <div class="col-lg-8 align-self-end">
+                    <h1 class="text-black font-weight-bold">{{item.title}}</h1>
+                    <hr class="divider" />
+                </div>
+            </div>
+        </div>
+    </header>
+        <!-- Create a slideshow of images for each item with button to chaneg image-->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        {% for image in item.images %}
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{{image}}" class="d-block w-100" alt="..." />
+                            </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+                    <!-- Center information-->
+                    <div class="container">
+                        <div class="row">
+                          <div class="col-md-6">
+                                <h3>Details about the item</h3>
+                                <p>The category of the item is {{item.category}}. This meands the object is in the category of {{item.category.description}}.</p>
+                                <p>The item is in {{item.condition}} condition. This means the item is in the condition of {{item.condition.description}}</p>
+                                <p>The item is located in the city of {{item.location}}.</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h3>A short description of the item</h3>
+                                <p>{{item.description}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h3>Owner information</h3>
+                                <p>The name of the owner is {{item.owner.name}}.</p>
+                                <p>The owner is a part of the class {{item.owner.class}}.</p>
+                                <p>The owner is currently located in {{item.owner.location}}.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Center contact button to the whole-->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary btn-lg btn-block">Contact owner via Telegram!</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+          </div>
+        </main>
+        <!-- Quote/testimonial aside-->
+        <aside class="text-center bg-gradient-primary-to-secondary">
+          <div class="container px-5">
+              <div class="row gx-5 justify-content-center">
+                  <div class="col-xl-8">
+                      <div class="h2 fs-1 text-white mb-4">"We can help you exchanging items!"</div>
+                  </div>
+              </div>
+          </div>
+        </aside>
+        <footer class="bg-black text-center py-5">
+          <div class="container px-5">
+              <div class="text-white-50 small">
+                  <div class="mb-2">&copy; Minerva students' Marketplace</div>
+                  <a href="#!">Privacy</a>
+                  <span class="mx-1">&middot;</span>
+                  <a href="#!">Terms</a>
+                  <span class="mx-1">&middot;</span>
+                  <a href="#!">FAQ</a>
+                  <span class="mx-1">&middot;</span>
+                  <a href="#!">Contact</a>
+              </div>
+          </div>
+        </footer>
+        <!-- Feedback Modal-->
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{{url_for('static', filename = "js/scripts.js")}}"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        <!-- The MIT License (MIT)-->
+        <!-- Copyright (c) 2013-2022 Start Bootstrap LLC-->
+        <!-- Permission is hereby granted, free of charge, to any person obtaining a copy-->
+        <!-- of this software and associated documentation files (the "Software"), to deal-->
+        <!-- in the Software without restriction, including without limitation the rights-->
+    </body>
+</html>

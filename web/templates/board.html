@@ -1,0 +1,106 @@
+<!-- {% extends "index.html" %}
+{% endblock content %} -->
+<!-- Long start added for testing of the html page 
+without needing to run the website-->
+
+
+<!-- Write a HTML listings/board page for the products using the same style-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Listing Board</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
+        <link href="C:\Users\Rebe\Documents\GitHub\cs162-barter-marketplace\web\static\css\styles.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        <!-- Navigation with a search bar-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <!--<a class="navbar-brand" href="#page-top"><img src="assets/img/navbar-logo.svg" alt="..." /></a>-->
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="bi-list"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#about">User</a></li>
+                    </ul>
+                    <!-- Create a search bar inside the navigation bar-->
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                        <button class="btn btn-outline-success" type="submit">
+                            Search
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <!-- Create the listing page with the name of the city as the title-->
+        <header class="masthead">
+            <div class="container px-4 px-lg-5 h-100">
+                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-8 align-self-end">
+                        <h1 class="text-black font-weight-bold">{{city}}</h1>
+                        <hr class="divider" />
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Create the listing for each product in the city as cards/posts, that fill each time one is added with Jinja-->
+        <section class="page-section" id="listings">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                {% for item in items %}
+                                <!-- item name as a clickable no underlaying color black-->
+                                <a href="item.html"><h2 class="card-title m-0">{{item.name}}</h2></a>
+                                <hr class="divider" />
+                                <!-- Add the image of the product-->
+                                <img src="{{item.image}}" alt="Image of the product" />
+                                <p class="card-text mb-0">{{item.description}}</p>
+                                <p class="card-text mb-0">{{item.category}}</p>
+                                <p class="card-text mb-0">{{item.city}}</p>
+                                <!-- Link to contact the owner-->
+                                <a class="btn btn-primary btn-xl" href="#contact">{{item.user_link}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="bg-light py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="row gx-4 gx-lg-5 align-items-center">
+                    <div class="col-lg-6 text-lg-start">
+                        <div class="small text-muted">Minerva Marketplace</div>
+                    </div>
+                    <div class="col-lg-6 text-lg-end">
+                        <a class="link-dark small" href="#!">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+    </html>

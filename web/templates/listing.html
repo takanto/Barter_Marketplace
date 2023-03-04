@@ -1,0 +1,210 @@
+{% extends "layout.html" %}
+{% block content %}
+<header class="masthead">
+    <div class="container px-4 px-lg-5 h-100">
+        <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-8 align-self-end">
+                <h1 class="text-black font-weight-bold">{{item.title}}</h1>
+                <hr class="divider" />
+            </div>
+        </div>
+    </div>
+</header>
+    <!-- Create a slideshow of images for each item with button to chaneg image-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    {% for image in item.images %}
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class ="card-img" src="{{ url_for('static', filename = 'assets/img/' + item.image) }}" alt="{{ item.name }}">
+                        </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    {% endfor %}
+                </div>
+            </div>
+                <!-- Center information-->
+                {% if listing.user_id == current_user.id %}
+                <div>
+                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#filterModal">
+                        <p> Update listing</p>
+                    </button>
+                </div>
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <!-- Pop up form to update current listing -->
+                    <div class="modal fade bd-example-modal-lg" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="uModalLabel">Update listing</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body container">
+                                    <form action="{{ url_for('update_listing', listing_id=item.id) }}" method="POST" enctype="multipart/form-data">
+                                        {{ form.csrf_token }}
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-3">
+                                                    <label for="title" class = "fw-bolder">Title</label>
+                                                    {% if form.title.errors %}
+                                                        {{ form.title(class="form-control is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.title.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.title(class="form-control") }}
+                                                    {% endif %}
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label for="description" class = "fw-bolder">Description</label>
+                                                    {% if form.description.errors %}
+                                                        {{ form.description(class="form-control is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.description.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.description(class="form-control") }}
+                                                    {% endif %}
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label for="price" class = "fw-bolder">Price</label>
+                                                    {% if form.price.errors %}
+                                                        {{ form.price(class="form-control is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.location.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.price(class="form-control") }}
+                                                    {% endif %}
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label for="location" class = "fw-bolder">Location</label>
+                                                    {% if form.location.errors %}
+                                                        {{ form.location(class="form-control is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.location.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.location(class="form-control") }}
+                                                    {% endif %}
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label for="state" class = "fw-bolder">State</label>
+                                                    {% if form.state.errors %}
+                                                        {{ form.state(class="form-control is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.state.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.state(class="form-control") }}
+                                                    {% endif %}
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label for="listingType" class = "fw-bolder">Listing Type</label>
+                                                    {% if form.listingType.errors %}
+                                                        {{ form.listingType(class="form-control is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.listingType.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.listingType(class="form-control") }}
+                                                    {% endif %}
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label for="tags" class = "fw-bolder">Tags</label>
+                                                    <!-- select multiple tags -->
+                                                    {% if form.tags.errors %}
+                                                        {{ form.tags(class="form-control is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.tags.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.tags(class="form-control") }}
+                                                    {% endif %}
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label for="image">Images</label>
+                                                    {% if form.images.errors %}
+                                                        {{ form.images(class="form-control-file is-invalid") }}
+                                                        <div class="invalid-feedback">
+                                                            {% for error in form.images.errors %}
+                                                                <span>{{ error }}</span>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ form.images(class="form-control-file") }}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                {{ form.submit(class="btn btn-primary form-control") }}
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                      
+                {% else %}
+                <div class="container">
+                    <div class="row">
+                      <div class="col-md-6">
+                            <h3>Details about the item</h3>
+                            <p>The category of the item is {{item.listingType}}. </p>
+                            <p>The item is in {{item.state}} condition.</p>
+                            <p>The item is located in the city of {{item.location}}.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h3>A short description of the item</h3>
+                            <p>{{item.description}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h3>Owner information</h3>
+                            <p>The name of the owner is {{item.user.firstName}}  {{item.user.lastName}}.</p>
+                            <p>The owner is currently located in {{item.user.location}}.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Center contact button to the whole-->
+                {% if listing.user_id != current_user.id %}
+                <div class="container">
+                    <div class="row">
+                        <h2> Owner TelegramId: {{item.user.telegramID}}
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary btn-lg btn-block">Contact owner via Telegram!</button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        </div>
+      </div>
+    </main>    
+{% endblock content %}
