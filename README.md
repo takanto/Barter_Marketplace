@@ -1,6 +1,4 @@
-# Welcome to CS162 Final Project
-
-![template ci](https://github.com/minerva-schools/template-cs162/actions/workflows/ci.yaml/badge.svg)
+# Barter Marketplace
 
 ## Run Virtual Environment
 
